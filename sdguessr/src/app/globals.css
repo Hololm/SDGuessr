@@ -107,6 +107,21 @@ body {
   height: 100vh; /* Subtract the navbar height */
 }
 
+.relative {
+  position: relative;
+}
+
+.absolute::after {
+  content: "";
+  position: absolute;
+  top: -10px; /* Adjust the top and bottom values as needed */
+  right: -10px;
+  bottom: -10px;
+  left: -10px;
+  background: transparent;
+  z-index: 0; /* Ensures it does not cover the actual content */
+}
+
 .navItem {
   height: 50px; /* Set the desired height */
   width: 100%;

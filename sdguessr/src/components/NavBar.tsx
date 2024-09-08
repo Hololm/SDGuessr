@@ -27,25 +27,28 @@ const NavBar: React.FC = () => {
         {/* Left Side Navigation Links */}
         <NavigationMenu>
           <NavigationMenuList className="flex items-center space-x-16 text-xl">
-            <NavigationMenuItem className="cursor-pointer transition-colors duration-200 hover:text-blue-500">
+            <NavigationMenuItem className="relative cursor-pointer transition-colors duration-200 hover:text-blue-500">
               SDGuessr
               <NavigationMenuContent>
                 <NavigationMenuLink href="/">Home</NavigationMenuLink>
               </NavigationMenuContent>
+              <span className="absolute inset-0" aria-hidden="true"></span> {/* Invisible area */}
             </NavigationMenuItem>
 
-            <NavigationMenuItem className="cursor-pointer transition-colors duration-200 hover:text-blue-500">
+            <NavigationMenuItem className="relative cursor-pointer transition-colors duration-200 hover:text-blue-500">
               About
               <NavigationMenuContent>
                 <NavigationMenuLink href="/">About</NavigationMenuLink>
               </NavigationMenuContent>
+              <span className="absolute inset-0" aria-hidden="true"></span> {/* Invisible area */}
             </NavigationMenuItem>
 
-            <NavigationMenuItem className="cursor-pointer transition-colors duration-200 hover:text-blue-500">
+            <NavigationMenuItem className="relative cursor-pointer transition-colors duration-200 hover:text-blue-500">
               Contact
               <NavigationMenuContent>
                 <NavigationMenuLink href="/">Contact</NavigationMenuLink>
               </NavigationMenuContent>
+              <span className="absolute inset-0" aria-hidden="true"></span> {/* Invisible area */}
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -60,7 +63,7 @@ const NavBar: React.FC = () => {
               placeholder="Enter city, address, or coordinates"
               className="search-input flex-grow border-none outline-none px-4"
             />
-            <MapIcon className="icon-right text-gray-600" />
+            <MapIcon className=" cursor-pointer icon-right text-gray-600" />
           </div>
           <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white rounded-2xl">
             Filter

@@ -7,6 +7,17 @@
   --foreground: #ffffff;
 }
 
+@font-face {
+  font-family: "Soft";
+  src: url("fonts/32904.ttf");
+}
+
+@font-face {
+  font-family: "Soft-Bold";
+  src: url("fonts/32905.ttf");
+}
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #ffffff;
@@ -107,8 +118,9 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow */
 }
 
-.navBar {
-  background-color: #848d99; /* Set the desired background color */
+.navbar {
+  background-color: #fff; /* Set the desired background color */
+  font-family: Soft-Bold, serif;
 }
 
 .searchBar {

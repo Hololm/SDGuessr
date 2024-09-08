@@ -21,27 +21,27 @@ import {
 
 const NavBar: React.FC = () => {
   return (
-    <nav className="navbar w-full h-20 bg-gray-100">
+    <nav className="navbar w-full h-20">
       <div className="container mx-auto flex justify-between items-center h-full">
-
+        <div>
         {/* Left Side Navigation Links */}
         <NavigationMenu>
-          <NavigationMenuList className="flex items-center space-x-4">
-            <NavigationMenuItem>
-              Home
+          <NavigationMenuList className="flex items-center space-x-16 text-xl">
+            <NavigationMenuItem className="cursor-pointer transition-colors duration-200 hover:text-blue-500">
+              SDGuessr
               <NavigationMenuContent>
                 <NavigationMenuLink href="/">Home</NavigationMenuLink>
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
+            <NavigationMenuItem className="cursor-pointer transition-colors duration-200 hover:text-blue-500">
               About
               <NavigationMenuContent>
                 <NavigationMenuLink href="/">About</NavigationMenuLink>
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
+            <NavigationMenuItem className="cursor-pointer transition-colors duration-200 hover:text-blue-500">
               Contact
               <NavigationMenuContent>
                 <NavigationMenuLink href="/">Contact</NavigationMenuLink>
@@ -49,24 +49,30 @@ const NavBar: React.FC = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-
-        {/* Centered Search Bar */}
-        <div className="search-bar flex items-center border border-gray-300 rounded-full p-2 bg-white w-full max-w-lg">
-          <SearchIcon className="icon-left text-gray-500" />
-          <Input
-            type="text"
-            placeholder="Enter city, address, or coordinates"
-            className="search-input flex-grow border-none outline-none px-4"
-          />
-          <MapIcon className="icon-right text-gray-500" />
+        </div>
+        {/* Centered Search Bar and Filter Button */}
+        <div className="flex items-center space-x-4">
+          <div className="search-bar flex items-center border border-gray-300 rounded-full p-2 bg-white w-96">
+            <SearchIcon className="icon-left text-gray-600" />
+            <input
+              type="text"
+              placeholder="Enter city, address, or coordinates"
+              className="search-input flex-grow border-none outline-none px-4"
+            />
+            <MapIcon className="icon-right text-gray-600" />
+          </div>
+          <Button className="px-6 py-2 bg-blue-500 text-white rounded-2xl">
+            Filter
+          </Button>
         </div>
 
-        {/* Right Side (Optional) */}
+
+        {/* Right Side */}
         <div className="flex items-center space-x-4">
           {/* Add any buttons or other elements on the right */}
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-full">
-            Sign In
-          </button>
+          <Button className="px-4 py-2 bg-blue-500 text-white rounded-2xl">
+            Sign Up
+          </Button>
         </div>
       </div>
     </nav>

@@ -22,7 +22,7 @@ import {
 const NavBar: React.FC = () => {
   return (
     <nav className="navbar w-full h-20">
-      <div className="container mx-auto flex justify-between items-center h-full">
+      <div className="container mx-auto flex h-full items-center">
         <div>
         {/* Left Side Navigation Links */}
         <NavigationMenu>
@@ -51,8 +51,9 @@ const NavBar: React.FC = () => {
         </NavigationMenu>
         </div>
         {/* Centered Search Bar and Filter Button */}
-        <div className="flex items-center space-x-4">
-          <div className="search-bar flex items-center border border-gray-300 rounded-full p-2 bg-white w-96">
+        <div className="flex-grow flex justify-center">
+          <div className="flex items-center space-x-4">
+          <div className="hover:border-blue-500 duration-200 search-bar flex items-center border border-gray-300 rounded-full p-2 bg-white w-96">
             <SearchIcon className="icon-left text-gray-600" />
             <input
               type="text"
@@ -61,16 +62,17 @@ const NavBar: React.FC = () => {
             />
             <MapIcon className="icon-right text-gray-600" />
           </div>
-          <Button className="px-6 py-2 bg-blue-500 text-white rounded-2xl">
+          <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white rounded-2xl">
             Filter
           </Button>
+            </div>
         </div>
 
 
         {/* Right Side */}
         <div className="flex items-center space-x-4">
           {/* Add any buttons or other elements on the right */}
-          <Button className="px-4 py-2 bg-blue-500 text-white rounded-2xl">
+          <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white rounded-2xl">
             Sign Up
           </Button>
         </div>

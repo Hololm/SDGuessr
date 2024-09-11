@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from 'react';
 
 function GoogleMap() {
-  const [message, setMessage] = useState("Loading");
+  const [user, setUser] = useState("Loading");
+  const [assistant, setAssistant] = useState("Loading");
+  const [mapInstance, setMap] = useState<google.maps.Map | null>(null);
 
   useEffect(() => {
     const loadMapScript = () => {
@@ -18,11 +20,20 @@ function GoogleMap() {
       });
     };
 
+    // User fetch
     fetch("http://localhost:8080/api/home")
         .then(response => response.json())
         .then(data => {
-          setMessage(data.message);
+          setUser(data.user);
         });
+
+    // Assistant fetch
+    fetch("http://localhost:8080/api/home")
+        .then(response => response.json())
+        .then(data => {
+          setAssistant(data.assistant);
+        });
+
 
     // Define initMap function
     (window as any).initMap = async () => {
@@ -49,36 +60,23 @@ function GoogleMap() {
           },
       });
 
+      setMap(map);
+
 
       // Marker Function
       const { AdvancedMarkerElement } = await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 
-          const secretMessages = ["donovan", "is", "the", "secret", "message"];
-          function attachSecretMessage(
-              marker: google.maps.marker.AdvancedMarkerElement,
-              secretMessage: string
-          ) {
-            const infowindow = new google.maps.InfoWindow({
-              content: secretMessage,
-            });
+      function addMarker(position: google.maps.LatLng | google.maps.LatLngLiteral) {
+        if (!map) return;
+        const marker = new google.maps.Marker({
+          position,
+          map: map,
+        });
 
             marker.addListener("click", () => {
               infowindow.open(marker.map, marker);
             });
           }
-
-      let markers: google.maps.Marker[] = [];
-      map.addListener("click", (event: google.maps.MapMouseEvent) => {
-      addMarker(event.latLng!);
-       });
-
-      function addMarker(position: google.maps.LatLng | google.maps.LatLngLiteral) {
-        const marker = new google.maps.Marker({
-          position,
-          map,
-        });
-        attachSecretMessage(marker, secretMessages[0]);
-      }
 
     };
 
@@ -92,11 +90,46 @@ function GoogleMap() {
     };
   }, []);
 
+  useEffect(() => {
+    if (mapInstance && user !== "Loading") {
+      // Reinitialize map markers when the message changes
+
+      function addMarker(position: google.maps.LatLng | google.maps.LatLngLiteral) {
+        const marker = new google.maps.Marker({
+          position,
+          map: mapInstance,
+        });
+
+        const userMessage = user;
+        const assistantMessage = assistant;
+        attachUserMessage(marker, userMessage);
+      }
+
+      mapInstance.addListener("click", (event: google.maps.MapMouseEvent) => {
+        if (event.latLng) {
+          addMarker(event.latLng);
+        }
+      });
+    }
+  }, [user, mapInstance]); // Run when `message` or `map` changes
+
+  function attachUserMessage(
+    marker: google.maps.Marker,
+    userMessage: string
+  ) {
+    const infowindow = new google.maps.InfoWindow({
+      content: userMessage,
+    });
+
+    marker.addListener("click", () => {
+      infowindow.open(marker.getMap(), marker);
+    });
+  }
+
   return (
-      <div>
-        <div>{message}</div>
-        <div id="map" style={{height: '100vh', width: '100%', outline: 'none'}}></div>
-      </div>
+    <div>
+      <div id="map" style={{ height: '100vh', width: '100%', outline: 'none' }}></div>
+    </div>
   );
 }
 

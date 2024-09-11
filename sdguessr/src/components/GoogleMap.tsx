@@ -37,7 +37,7 @@ function GoogleMap() {
       });
 
       // Add a click listener to the marker
-      // @ts-ignore
+      // @ts-expect-error
       marker.addListener('click', ({ domEvent, latLng }) => {
         console.log('Marker clicked at:', latLng.toString());
         // Add more logic here if needed

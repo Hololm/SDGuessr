@@ -61,11 +61,11 @@ const NavBar: React.FC = () => {
             <input
               type="text"
               placeholder="Enter city, address, or coordinates"
-              className="search-input flex-grow border-none outline-none px-4"
+              className="search-input flex-grow border-none outline-none px-2"
             />
             <MapIcon className=" cursor-pointer icon-right text-gray-600" />
           </div>
-          <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white rounded-2xl">
+          <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white text-lg rounded-full">
             Filter
           </Button>
             </div>
@@ -75,7 +75,14 @@ const NavBar: React.FC = () => {
         {/* Right Side */}
         <div className="flex items-center space-x-4">
           {/* Add any buttons or other elements on the right */}
-          <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white rounded-2xl">
+          <NavigationMenu>
+          <NavigationMenuList className="flex items-center space-x-16 text-xl">
+            <NavigationMenuItem className="relative cursor-pointer transition-colors duration-200 hover:text-blue-500">
+                Login
+            </NavigationMenuItem>
+          </NavigationMenuList>
+          </NavigationMenu>
+          <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white text-lg">
             Sign Up
           </Button>
         </div>

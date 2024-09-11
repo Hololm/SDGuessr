@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function GoogleMap() {
+  const [message, setMessage] = useState("Loading");
+
   useEffect(() => {
     const loadMapScript = () => {
       return new Promise<void>((resolve, reject) => {
@@ -15,6 +17,12 @@ function GoogleMap() {
         document.body.appendChild(script);
       });
     };
+
+    fetch("http://localhost:8080/api/home")
+        .then(response => response.json())
+        .then(data => {
+          setMessage(data.message);
+        });
 
     // Define initMap function
     (window as any).initMap = async () => {
@@ -85,9 +93,10 @@ function GoogleMap() {
   }, []);
 
   return (
-    <div>
-      <div id="map" style={{ height: '100vh', width: '100%', outline: 'none' }}></div>
-    </div>
+      <div>
+        <div>{message}</div>
+        <div id="map" style={{height: '100vh', width: '100%', outline: 'none'}}></div>
+      </div>
   );
 }
 

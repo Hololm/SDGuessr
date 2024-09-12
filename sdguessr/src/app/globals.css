@@ -17,6 +17,9 @@
   src: url("fonts/32905.ttf");
 }
 
+html {
+  font-family: "Soft", serif;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -149,4 +152,12 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevent scrolling */
+}
+
+.markerContainer {
+
+}
+
+.dialogContainer {
+  font-family: "Soft", serif;
 }

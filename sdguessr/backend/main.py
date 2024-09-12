@@ -1,6 +1,7 @@
 import time
 import os
 import json
+import threading
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -10,6 +11,7 @@ load_dotenv()
 class OpenAIClient:
     def __init__(self, api_key):
         self.client = OpenAI(api_key=api_key)
+        self.lock = threading.Lock()  # Add a lock to ensure no two threads make calls simultaneously
 
     def submit_message(self, assistant_id, thread, user_message):
         self.client.beta.threads.messages.create(
@@ -64,7 +66,7 @@ def main():
 
     # Emulating concurrent user requests
     thread, run = openai_client.create_thread_and_run(
-        prompt, assistant_id  # transcript sent as prompt to assistant
+        prompt, assistant_id
     )
 
     # Wait for Run 1

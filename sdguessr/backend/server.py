@@ -15,10 +15,17 @@ def return_home():
     user_response = assistant_response.get("content").get("user")
     assistant_response = assistant_response.get("content").get("assistant")
 
-    return jsonify({
+    response = jsonify({
         "user": user_response,
         "assistant": assistant_response,
     })
 
+    # Disable caching
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+
+    return response
+
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(port=8080)

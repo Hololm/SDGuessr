@@ -7,11 +7,13 @@ const Page: React.FC = () => {
 
   return (
       <div>
+          <div className="markerContainer">
           <div className="navBar">
               <NavBar/>
           </div>
           <div className="mapContainer">
           <GoogleMap/>
+          </div>
           </div>
       </div>
   );

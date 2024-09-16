@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog'; // Import shadcn Dialog
+import { Button } from "@/components/ui/button";
 
 function GoogleMap() {
   const [user, setUser] = useState("Loading...");
@@ -68,10 +69,20 @@ function GoogleMap() {
 
   const { AdvancedMarkerElement } = await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 
-  // Create a new AdvancedMarkerElement
+   const marker1 = new AdvancedMarkerElement({
+      map: mapInstance,
+      position: { lat: 37.4239163, lng: -122.0947209 },
+  });
+
   const marker = new AdvancedMarkerElement({
     map: map, // Attach marker to map
     position: position, // Set position
+  });
+
+  // Create a new AdvancedMarkerElement
+  const marker2 = new AdvancedMarkerElement({
+    map, // Attach marker to map
+    position: {lat: 33.423545, lng: -111.932736}, // Set position
   });
 
   // Info window content (e.g., your secret message)
@@ -82,10 +93,7 @@ function GoogleMap() {
   marker.addListener('click', () => {
       setIsDialogOpen(true);
   });
-}
-
-
-    };
+}};
 
     // Load the Google Maps script
     loadMapScript().catch(error => console.error(error));
@@ -112,13 +120,14 @@ function GoogleMap() {
         attachUserMessage(marker, userMessage);
       }
 
+
       mapInstance.addListener("click", (event: google.maps.MapMouseEvent) => {
         if (event.latLng) {
           addMarker(event.latLng);
         }
       });
     }
-  }, [user, mapInstance]); // Run when `message` or `map` changes
+  }, [mapInstance]); // Run when `message` or `map` changes
 
   function attachUserMessage(
     marker: google.maps.Marker,
@@ -139,6 +148,7 @@ function GoogleMap() {
       <div id="map" style={{ height: '100vh', width: '100%', outline: 'none' }}></div>
 
 
+
     {/* Dialog */}
       <div className="dialogContainer">
       <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -147,50 +157,29 @@ function GoogleMap() {
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50">
-            <Dialog.Content className="fixed top-[20%] left-1/2 transform -translate-x-1/2 rounded-lg bg-white p-8 shadow-lg max-w-md w-full">
-              <Dialog.Title className="text-lg font-bold">Marker Information</Dialog.Title>
-              <br></br>
-              <Dialog.Description className="mt-2">
-                <p>User: {user}</p>
-                <br></br>
-                <p>Summary: {assistant}</p>
-              </Dialog.Description>
-              <Dialog.Close asChild>
-              <button className="px-6 py-2 bg-black hover:bg-blue-500 text-white text-lg rounded-full">Close</button>
-              </Dialog.Close>
-            </Dialog.Content>
-          </Dialog.Overlay>
-        </Dialog.Portal>
-      </Dialog.Root>
-    </div>
+            <Dialog.Content
+                className="fixed top-[20%] left-1/2 transform -translate-x-1/2 rounded-lg bg-white p-8 shadow-lg max-w-md w-full">
 
-          {/* Dialog */}
-      <div className="dialogContainer">
-      <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <Dialog.Trigger asChild>
-          <button className="hidden">Open Dialog</button>
-        </Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50">
-            <Dialog.Content className="fixed top-[20%] left-1/2 transform -translate-x-1/2 rounded-lg bg-white p-8 shadow-lg max-w-md w-full">
+               {/* SVG Icon in the top-right */}
+            <img src="https://sdgimpact.asu.edu/sites/default/files/2022-10/e_sdg_icons-01.png"
+                 className="absolute top-3 right-3 h-16 w-16 rounded-full border-2 border-black bg-white">
+            </img>
               <Dialog.Title className="text-lg font-bold">Marker Information</Dialog.Title>
               <br></br>
               <Dialog.Description className="mt-2">
-                <p>User: I saw trash being placed onto the sidewalk near where I work.
-                  The community of people here are not too happy about that.</p>
+                <Dialog.Title className="text-base font-bold">User</Dialog.Title>
                 <br></br>
-                <p>Summary: The mining industry has led to significant environmental degradation in the local community,
-                  primarily through pollution, habitat destruction, and improper waste management. The presence of mining
-                  operations often results in contaminated water sources and air quality issues, which can adversely
-                  affect public health. Additionally, the influx of workers can strain local resources and infrastructure,
-                  causing tensions among residents. Increasing littering, such as trash on sidewalks, reflects a broader
-                  issue of neglect and insufficient waste management linked to mining activities. To mitigate these impacts,
-                  the community could advocate for stricter regulations on mining practices, implement better waste management
-                  systems, and engage in community cleanup initiatives to foster a cleaner environment. Education campaigns
-                  may also help residents understand the importance of maintaining their surroundings and the impact of mining operations.</p>
+                <p>{user}</p>
+                <br></br>
+                <Dialog.Title className="text-base font-bold">AI Summary</Dialog.Title>
+              <br></br>
+                <p>{assistant}</p>
               </Dialog.Description>
+              <br></br>
               <Dialog.Close asChild>
-              <button className="px-6 py-2 bg-black hover:bg-blue-500 text-white text-lg rounded-full">Close</button>
+                <button
+                    className="dialogContainer px-6 py-2 bg-black hover:bg-blue-500 text-white text-lg rounded-full">Close
+                </button>
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Overlay>

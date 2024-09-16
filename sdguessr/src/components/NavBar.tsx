@@ -63,7 +63,21 @@ const NavBar: React.FC = () => {
               placeholder="Enter city, address, or coordinates"
               className="search-input flex-grow border-none outline-none px-2"
             />
-            <MapIcon className=" cursor-pointer icon-right text-gray-600" />
+            <MapIcon className="cursor-pointer icon-right text-gray-600" onClick={() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        },
+        (error) => {
+          console.error('Error getting geolocation', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }}/>
           </div>
           <Button className="px-6 py-2 bg-black hover:bg-blue-500 text-white text-lg rounded-full">
             Filter
